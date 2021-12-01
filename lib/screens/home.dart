@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:plant_system_mobile/bloc/pump/pump_bloc.dart';
+import 'package:plant_system_mobile/blocs/pump/pump_bloc.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
