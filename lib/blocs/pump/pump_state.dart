@@ -18,10 +18,7 @@ class PumpInitial extends PumpState {
 
 class PumpWorkingSuccess extends PumpState {
   const PumpWorkingSuccess(int pumpID, bool isActive)
-      : super(
-          pumpID: pumpID,
-          isActive: isActive,
-        );
+      : super(pumpID: pumpID, isActive: isActive);
 
   @override
   List<Object?> get props => [pumpID, isActive];

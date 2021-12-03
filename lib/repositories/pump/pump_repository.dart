@@ -18,6 +18,7 @@ class PumpRepository {
         PumpApiPath.getPump.path.setPathWithParams([pumpID]),
         queryParameters: query.toJson(),
       );
+      if (response.statusCode != 200) throw Exception(response.data);
 
       return PumpResponseModel.fromJson(response.data);
     } catch (e) {
