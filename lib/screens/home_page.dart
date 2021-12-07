@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plant_system_mobile/blocs/pump/pump_bloc.dart';
 import 'package:plant_system_mobile/models/pump/pump_activated_request_model/pump_activated_request_model.dart';
+import 'package:plant_system_mobile/widget/loading.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -42,7 +43,8 @@ class _HomePage extends StatelessWidget {
             ),
           );
         }
-        return Container();
+
+        return const Loading();
       },
     );
   }

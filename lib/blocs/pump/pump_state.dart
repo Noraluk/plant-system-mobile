@@ -8,6 +8,11 @@ class PumpInitial extends PumpState {
   List<Object?> get props => [];
 }
 
+class PumpLoading extends PumpState {
+  @override
+  List<Object?> get props => [];
+}
+
 class PumpLoadedState extends PumpState {
   PumpLoadedState({
     required this.id,
