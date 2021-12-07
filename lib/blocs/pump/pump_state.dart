@@ -1,25 +1,26 @@
 part of 'pump_bloc.dart';
 
 @immutable
-abstract class PumpState extends Equatable {
-  const PumpState({
-    this.pumpID,
-    this.isActive = false,
-  });
-
-  final int? pumpID;
-  final bool isActive;
-}
+abstract class PumpState extends Equatable {}
 
 class PumpInitial extends PumpState {
   @override
   List<Object?> get props => [];
 }
 
-class PumpWorkingSuccess extends PumpState {
-  const PumpWorkingSuccess(int pumpID, bool isActive)
-      : super(pumpID: pumpID, isActive: isActive);
+class PumpLoadedState extends PumpState {
+  PumpLoadedState({
+    required this.id,
+    this.isActive,
+    this.isWorking,
+    this.isAsk,
+  });
+
+  final int id;
+  final bool? isActive;
+  final bool? isWorking;
+  final bool? isAsk;
 
   @override
-  List<Object?> get props => [pumpID, isActive];
+  List<Object?> get props => [id, isActive, isWorking, isAsk];
 }

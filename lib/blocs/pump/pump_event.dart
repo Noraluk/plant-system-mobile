@@ -3,12 +3,27 @@ part of 'pump_bloc.dart';
 @immutable
 abstract class PumpEvent extends Equatable {}
 
-class PumpWorked extends PumpEvent {
-  PumpWorked({required this.pumpID, required this.isActive});
+class PumpActivatedEvent extends PumpEvent {
+  PumpActivatedEvent({
+    required this.id,
+    required this.pumpActivatedRequestModel,
+  });
 
-  final int pumpID;
-  final bool isActive;
+  final int id;
+  final PumpActivatedRequestModel pumpActivatedRequestModel;
 
   @override
-  List<Object> get props => [pumpID, isActive];
+  List<Object> get props => [
+        id,
+        pumpActivatedRequestModel,
+      ];
+}
+
+class PumpLoadedEvent extends PumpEvent {
+  PumpLoadedEvent({required this.id});
+
+  final int id;
+
+  @override
+  List<Object?> get props => [id];
 }
