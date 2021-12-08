@@ -11,16 +11,16 @@ void main() {
     group('Test PumpInitial', () {
       test('Get initial value', () {
         PumpInitial state = PumpInitial();
-        List<Object?> expected = [];
+        List<Object?> expected = [null, null, null, null];
 
         expect(state.props, expected);
       });
     });
 
-    group('Test PumpLoading', () {
+    group('Test PumpLoadingState', () {
       test('Get initial value', () {
-        PumpLoading state = PumpLoading();
-        List<Object?> expected = [];
+        PumpLoadingState state = PumpLoadingState();
+        List<Object?> expected = [null, null, null, null];
 
         expect(state.props, expected);
       });

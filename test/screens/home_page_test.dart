@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:plant_system_mobile/blocs/pump/pump_bloc.dart';
 import 'package:plant_system_mobile/screens/home_page.dart';
-import 'package:plant_system_mobile/widget/loading.dart';
+import 'package:plant_system_mobile/widgets/loading.dart';
 
 class MockPumpBloc extends MockBloc<PumpEvent, PumpState> implements PumpBloc {}
 
@@ -51,11 +51,24 @@ void main() {
     });
 
     testWidgets('Waiting for loading pump', (tester) async {
-      when(() => pumpBloc.state).thenReturn(PumpLoading());
+      when(() => pumpBloc.state).thenReturn(PumpLoadingState());
       await tester.pumpHomeWidget(pumpBloc, const HomeView());
       await tester.pump();
 
       expect(find.byType(Loading), findsOneWidget);
+    });
+
+    testWidgets('Get error', (tester) async {
+      when(() => pumpBloc.state).thenReturn(PumpErrorState());
+
+      List<PumpState> expectedStates = [PumpErrorState()];
+      whenListen(pumpBloc, Stream.fromIterable(expectedStates));
+
+      await tester.pumpHomeWidget(pumpBloc, const HomeView());
+      await tester.pump();
+
+      expect(find.byType(ScaffoldMessenger), findsOneWidget);
+      expect(find.text('pump invalid'), findsOneWidget);
     });
   });
 

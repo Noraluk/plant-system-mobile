@@ -43,7 +43,7 @@ void main() {
         act: (bloc) => bloc.add(PumpActivatedEvent(
             id: id, pumpActivatedRequestModel: pumpActivatedRequestModel)),
         expect: () => [
-          PumpLoading(),
+          PumpLoadingState(),
           const PumpLoadedState(id: id, isActive: isActive),
         ],
       );
@@ -69,7 +69,7 @@ void main() {
         build: () => PumpBloc(pumpRepository: pumpRepository),
         act: (bloc) => bloc.add(PumpLoadedEvent(id: id)),
         expect: () => [
-          PumpLoading(),
+          PumpLoadingState(),
           const PumpLoadedState(
             id: id,
             isActive: isActive,
