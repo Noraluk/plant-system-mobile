@@ -14,38 +14,40 @@ class HomePage extends StatelessWidget {
         ..add(PumpLoadedEvent(
           id: 1,
         )),
-      child: const Scaffold(body: _HomePage()),
+      child: const HomeView(),
     );
   }
 }
 
-class _HomePage extends StatelessWidget {
-  const _HomePage({Key? key}) : super(key: key);
+class HomeView extends StatelessWidget {
+  const HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PumpBloc, PumpState>(
-      builder: (context, state) {
-        if (state is PumpLoadedState) {
-          return Center(
-            child: Switch.adaptive(
-              value: state.isActive!,
-              onChanged: (isActive) {
-                context.read<PumpBloc>().add(
-                      PumpActivatedEvent(
-                        id: 1,
-                        pumpActivatedRequestModel: PumpActivatedRequestModel(
-                          isActive: isActive,
+    return Scaffold(
+      body: BlocBuilder<PumpBloc, PumpState>(
+        builder: (context, state) {
+          if (state is PumpLoadedState) {
+            return Center(
+              child: Switch.adaptive(
+                value: state.isActive!,
+                onChanged: (isActive) {
+                  context.read<PumpBloc>().add(
+                        PumpActivatedEvent(
+                          id: 1,
+                          pumpActivatedRequestModel: PumpActivatedRequestModel(
+                            isActive: isActive,
+                          ),
                         ),
-                      ),
-                    );
-              },
-            ),
-          );
-        }
+                      );
+                },
+              ),
+            );
+          }
 
-        return const Loading();
-      },
+          return const Loading();
+        },
+      ),
     );
   }
 }
