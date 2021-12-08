@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:plant_system_mobile/constants/pump/pump_api_path.dart';
 import 'package:plant_system_mobile/extensions/string_extension.dart';
 import 'package:plant_system_mobile/models/pump/pump_activated_request_model/pump_activated_request_model.dart';
@@ -8,7 +8,7 @@ import 'package:plant_system_mobile/models/pump/pump_activated_response_model/pu
 import 'package:plant_system_mobile/models/pump/pump_model/pump_model.dart';
 import 'package:plant_system_mobile/repositories/pump/pump_repository.dart';
 
-import '../../mock/dio.mocks.dart';
+class MockDio extends Mock implements Dio {}
 
 void main() {
   late Dio dio;
@@ -28,10 +28,10 @@ void main() {
 
         String path = PumpApiPath.activePump.path.setPathWithParams([id]);
 
-        when(dio.patch(
-          path,
-          data: body.toJson(),
-        )).thenAnswer((_) async => Response(
+        when(() => dio.patch(
+              path,
+              data: body.toJson(),
+            )).thenAnswer((_) async => Response(
               requestOptions: RequestOptions(path: path),
               data: data,
               statusCode: 200,
@@ -53,10 +53,10 @@ void main() {
 
         String path = PumpApiPath.activePump.path.setPathWithParams([id]);
 
-        when(dio.patch(
-          path,
-          data: body.toJson(),
-        )).thenAnswer((_) async => Response(
+        when(() => dio.patch(
+              path,
+              data: body.toJson(),
+            )).thenAnswer((_) async => Response(
               requestOptions: RequestOptions(path: path),
               data: 'error',
               statusCode: 400,
@@ -86,9 +86,9 @@ void main() {
 
         String path = PumpApiPath.getPump.path.setPathWithParams([id]);
 
-        when(dio.get(
-          path,
-        )).thenAnswer((_) async => Response(
+        when(() => dio.get(
+              path,
+            )).thenAnswer((_) async => Response(
               requestOptions: RequestOptions(path: path),
               data: data,
               statusCode: 200,
@@ -105,9 +105,9 @@ void main() {
 
         String path = PumpApiPath.getPump.path.setPathWithParams([id]);
 
-        when(dio.get(
-          path,
-        )).thenAnswer((_) async => Response(
+        when(() => dio.get(
+              path,
+            )).thenAnswer((_) async => Response(
               requestOptions: RequestOptions(path: path),
               data: 'error',
               statusCode: 400,
