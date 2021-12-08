@@ -35,6 +35,8 @@ class PumpRepository {
         PumpApiPath.getPump.path.setPathWithParams([id]),
       );
 
+      if (response.statusCode != 200) throw Exception(response.data);
+
       return PumpModel.fromJson(response.data);
     } catch (e) {
       rethrow;
