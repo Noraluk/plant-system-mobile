@@ -17,15 +17,9 @@ abstract class PumpState extends Equatable {
   List<Object?> get props => [id, isActive, isWorking, isAsk];
 }
 
-class PumpInitial extends PumpState {
-  @override
-  List<Object?> get props => [];
-}
+class PumpInitial extends PumpState {}
 
-class PumpLoading extends PumpState {
-  @override
-  List<Object?> get props => [];
-}
+class PumpLoadingState extends PumpState {}
 
 class PumpLoadedState extends PumpState {
   const PumpLoadedState({
@@ -40,3 +34,5 @@ class PumpLoadedState extends PumpState {
           isAsk: isAsk,
         );
 }
+
+class PumpErrorState extends PumpState {}

@@ -13,8 +13,13 @@ class PumpBloc extends Bloc<PumpEvent, PumpState> {
   final PumpRepository pumpRepository;
 
   PumpBloc({required this.pumpRepository}) : super(PumpInitial()) {
-    on<PumpActivatedEvent>((event, emit) async {
-      emit(PumpLoading());
+    on<PumpActivatedEvent>(_onActivate);
+    on<PumpLoadedEvent>(_onGetPump);
+  }
+
+  _onActivate(PumpActivatedEvent event, Emitter emit) async {
+    try {
+      emit(PumpLoadingState());
 
       PumpActivatedResponseModel pumpActivatedResponseModel =
           await pumpRepository.activePump(
@@ -26,10 +31,14 @@ class PumpBloc extends Bloc<PumpEvent, PumpState> {
         id: pumpActivatedResponseModel.id,
         isActive: pumpActivatedResponseModel.isActive,
       ));
-    });
+    } catch (_) {
+      emit(PumpErrorState());
+    }
+  }
 
-    on<PumpLoadedEvent>((event, emit) async {
-      emit(PumpLoading());
+  _onGetPump(PumpLoadedEvent event, Emitter emit) async {
+    try {
+      emit(PumpLoadingState());
 
       PumpModel pump = await pumpRepository.getPump(id: event.id);
 
@@ -39,6 +48,8 @@ class PumpBloc extends Bloc<PumpEvent, PumpState> {
         isWorking: pump.isWorking,
         isAsk: pump.isAsk,
       ));
-    });
+    } catch (_) {
+      emit(PumpErrorState());
+    }
   }
 }
