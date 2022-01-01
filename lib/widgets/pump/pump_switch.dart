@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:plant_system_mobile/blocs/pump/pump_bloc.dart';
 import 'package:plant_system_mobile/models/pump/pump_activated_request_model/pump_activated_request_model.dart';
 import 'package:plant_system_mobile/widgets/countdown.dart';
@@ -22,8 +23,8 @@ class _PumpSwitchState extends State<PumpSwitch> {
     return Center(
       child: PageSegment(
         segmentIcons: const [
-          Icons.remove,
-          Icons.add,
+          FontAwesomeIcons.handPaper,
+          Icons.timer,
         ],
         pages: [
           Switch.adaptive(

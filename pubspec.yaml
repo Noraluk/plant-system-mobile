@@ -45,6 +45,7 @@ dependencies:
   freezed_annotation: ^1.0.0
   json_serializable: ^6.1.1
   json_annotation: ^4.4.0
+  font_awesome_flutter: ^9.2.0
 
  
 

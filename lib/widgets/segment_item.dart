@@ -28,7 +28,7 @@ class _SegmentItemState extends State<SegmentItem> {
         decoration: widget.index == widget.selectedIndex
             ? widget.segmentModel.focusBoxDecoration
             : widget.segmentModel.boxDecoration,
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
         child: Center(
           child: Icon(
             widget.segmentModel.icon,
