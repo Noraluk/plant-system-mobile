@@ -50,6 +50,7 @@ class _CountdownState extends State<Countdown>
             _animationController!.duration! * _animationController!.value;
 
         return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(clock.getDigitalClock()),
             IconButton(
