@@ -20,39 +20,37 @@ class _PumpSwitchState extends State<PumpSwitch> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: PageSegment(
-        segmentIcons: const [
-          FontAwesomeIcons.handPaper,
-          Icons.timer,
-        ],
-        pages: [
-          Switch.adaptive(
-            value: widget.isActive,
-            onChanged: (isActive) => _changePumpStatus(
-              context,
-              isActive: isActive,
-            ),
+    return PageSegment(
+      segmentIcons: const [
+        FontAwesomeIcons.handPaper,
+        Icons.timer,
+      ],
+      pages: [
+        Switch.adaptive(
+          value: widget.isActive,
+          onChanged: (isActive) => _changePumpStatus(
+            context,
+            isActive: isActive,
           ),
-          Countdown(
-            begin: 5,
-            onStart: () {
-              _changePumpStatus(context, isActive: true);
-              setState(() {
-                isCountdownFinish = false;
-              });
-            },
-            onEnd: !isCountdownFinish
-                ? () {
-                    _changePumpStatus(context, isActive: false);
-                    setState(() {
-                      isCountdownFinish = true;
-                    });
-                  }
-                : null,
-          ),
-        ],
-      ),
+        ),
+        Countdown(
+          begin: 5,
+          onStart: () {
+            _changePumpStatus(context, isActive: true);
+            setState(() {
+              isCountdownFinish = false;
+            });
+          },
+          onEnd: !isCountdownFinish
+              ? () {
+                  _changePumpStatus(context, isActive: false);
+                  setState(() {
+                    isCountdownFinish = true;
+                  });
+                }
+              : null,
+        ),
+      ],
     );
   }
 

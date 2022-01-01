@@ -52,12 +52,16 @@ class _CountdownState extends State<Countdown>
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(clock.getDigitalClock()),
+            Text(
+              clock.getDigitalClock(),
+              style: const TextStyle(fontSize: 70.0),
+            ),
             IconButton(
               onPressed: () {
                 Future.delayed(Duration.zero,
                     () => _animationController!.isAnimating ? stop() : start());
               },
+              iconSize: 70.0,
               icon: Icon(
                 _animationController!.isAnimating
                     ? Icons.pause
