@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:plant_system_mobile/models/segment_model.dart';
-import 'package:plant_system_mobile/styles/app_border_style.dart';
 import 'package:plant_system_mobile/widgets/segment_item.dart';
 
 class Segment extends StatefulWidget {
@@ -30,21 +29,11 @@ class _SegmentState extends State<Segment> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: List.generate(widget.icons.length, (index) {
-          BoxDecoration _boxDecoration = AppBorderStyle.normal;
-          BoxDecoration _focusBoxDecoration = AppBorderStyle.normalFocus;
-          if (index == 0) {
-            _boxDecoration = AppBorderStyle.firstSegment;
-            _focusBoxDecoration = AppBorderStyle.firstSegmentFocus;
-          } else if (index == widget.icons.length - 1) {
-            _boxDecoration = AppBorderStyle.lastSegment;
-            _focusBoxDecoration = AppBorderStyle.lastSegmentFocus;
-          }
-
           return SegmentItem(
-            segmentModel: SegmentModel(
-              icon: widget.icons[index],
-              boxDecoration: _boxDecoration,
-              focusBoxDecoration: _focusBoxDecoration,
+            segmentModel: SegmentModel.get(
+              widget.icons[index],
+              lastIndex: widget.icons.length - 1,
+              index: index,
             ),
             index: index,
             selectedIndex: widget.pageSelectedIndex != null
