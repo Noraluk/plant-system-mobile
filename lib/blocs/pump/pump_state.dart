@@ -70,3 +70,7 @@ class PumpManualLoadedState extends PumpLoadedState {
 }
 
 class PumpErrorState extends PumpState {}
+
+class ManualPumpErrorState extends PumpErrorState {}
+
+class CountdownPumpErrorState extends PumpErrorState {}

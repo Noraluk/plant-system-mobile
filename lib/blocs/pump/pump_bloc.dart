@@ -28,8 +28,8 @@ class PumpBloc extends Bloc<PumpEvent, PumpState> {
         id: state.id!,
         isActive: state.isActive,
       ));
-    } on PumpErrorState catch (e) {
-      emit(e);
+    } on PumpErrorState catch (_) {
+      emit(ManualPumpErrorState());
     }
   }
 
@@ -43,8 +43,8 @@ class PumpBloc extends Bloc<PumpEvent, PumpState> {
         isActive: state.isActive,
         second: event.second,
       ));
-    } on PumpErrorState catch (e) {
-      emit(e);
+    } on PumpErrorState catch (_) {
+      emit(CountdownPumpErrorState());
     }
   }
 
@@ -76,8 +76,8 @@ class PumpBloc extends Bloc<PumpEvent, PumpState> {
         isWorking: state.isWorking,
         isAsk: state.isAsk,
       ));
-    } on PumpState catch (e) {
-      emit(e);
+    } on PumpState catch (_) {
+      emit(ManualPumpErrorState());
     }
   }
 
@@ -93,8 +93,8 @@ class PumpBloc extends Bloc<PumpEvent, PumpState> {
         isAsk: state.isAsk,
         second: 0,
       ));
-    } on PumpState catch (e) {
-      emit(e);
+    } on PumpState catch (_) {
+      emit(CountdownPumpErrorState());
     }
   }
 

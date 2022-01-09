@@ -9,7 +9,12 @@ class ManualPump extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PumpBloc, PumpState>(
+    return BlocConsumer<PumpBloc, PumpState>(
+      listener: (context, state) {
+        if (state is ManualPumpErrorState) {
+          context.read<PumpBloc>().add(const PumpManualLoadedEvent(1));
+        }
+      },
       builder: (context, state) {
         if (state is PumpManualLoadedState) {
           return Switch.adaptive(

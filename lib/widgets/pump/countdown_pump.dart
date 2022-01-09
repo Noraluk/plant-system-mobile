@@ -17,7 +17,12 @@ class _CountdownPumpState extends State<CountdownPump> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PumpBloc, PumpState>(
+    return BlocConsumer<PumpBloc, PumpState>(
+      listener: (context, state) {
+        if (state is CountdownPumpErrorState) {
+          context.read<PumpBloc>().add(const PumpCountdownLoadedEvent(1));
+        }
+      },
       builder: (context, state) {
         if (state is PumpCountdownLoadedState) {
           return Countdown(
