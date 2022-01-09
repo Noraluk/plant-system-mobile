@@ -13,43 +13,102 @@ class PumpBloc extends Bloc<PumpEvent, PumpState> {
   final PumpRepository pumpRepository;
 
   PumpBloc({required this.pumpRepository}) : super(PumpInitial()) {
-    on<PumpActivatedEvent>(_onActivate);
-    on<PumpLoadedEvent>(_onGetPump);
+    on<PumpManualActivatedEvent>(_onManualActivate);
+    on<PumpCountdownActivatedEvent>(_onCountdownActivate);
+    on<PumpManualLoadedEvent>(_onGetManualPump);
+    on<PumpCountdownLoadedEvent>(_onGetCountdownPump);
   }
 
-  _onActivate(PumpActivatedEvent event, Emitter emit) async {
+  _onManualActivate(PumpManualActivatedEvent event, Emitter emit) async {
     try {
       emit(PumpLoadingState());
 
-      PumpActivatedResponseModel pumpActivatedResponseModel =
-          await pumpRepository.activePump(
-        id: event.id,
-        body: event.pumpActivatedRequestModel,
-      );
-
-      emit(PumpLoadedState(
-        id: pumpActivatedResponseModel.id,
-        isActive: pumpActivatedResponseModel.isActive,
+      PumpState state = await _onActivate(event, emit);
+      emit(PumpManualLoadedState(
+        id: state.id!,
+        isActive: state.isActive,
       ));
-    } catch (_) {
-      emit(PumpErrorState());
+    } on PumpErrorState catch (e) {
+      emit(e);
     }
   }
 
-  _onGetPump(PumpLoadedEvent event, Emitter emit) async {
+  _onCountdownActivate(PumpCountdownActivatedEvent event, Emitter emit) async {
     try {
       emit(PumpLoadingState());
 
-      PumpModel pump = await pumpRepository.getPump(id: event.id);
+      PumpState state = await _onActivate(event, emit);
+      emit(PumpCountdownLoadedState(
+        id: event.id,
+        isActive: state.isActive,
+        second: event.second,
+      ));
+    } on PumpErrorState catch (e) {
+      emit(e);
+    }
+  }
 
-      emit(PumpLoadedState(
+  Future<PumpState> _onActivate(PumpEvent event, Emitter emit) async {
+    try {
+      PumpActivatedResponseModel pumpActivatedResponseModel =
+          await pumpRepository.activePump(
+        id: event.id,
+        body: event.pumpActivatedRequestModel!,
+      );
+
+      return PumpLoadedState(
+        id: pumpActivatedResponseModel.id,
+        isActive: pumpActivatedResponseModel.isActive,
+      );
+    } catch (_) {
+      throw PumpErrorState();
+    }
+  }
+
+  _onGetManualPump(PumpManualLoadedEvent event, Emitter emit) async {
+    try {
+      emit(PumpLoadingState());
+
+      PumpState state = await _onGetPump(event, emit);
+      emit(PumpManualLoadedState(
+        id: state.id!,
+        isActive: state.isActive,
+        isWorking: state.isWorking,
+        isAsk: state.isAsk,
+      ));
+    } on PumpState catch (e) {
+      emit(e);
+    }
+  }
+
+  _onGetCountdownPump(PumpCountdownLoadedEvent event, Emitter emit) async {
+    try {
+      emit(PumpLoadingState());
+
+      PumpState state = await _onGetPump(event, emit);
+      emit(PumpCountdownLoadedState(
+        id: state.id!,
+        isActive: state.isActive,
+        isWorking: state.isWorking,
+        isAsk: state.isAsk,
+        second: 0,
+      ));
+    } on PumpState catch (e) {
+      emit(e);
+    }
+  }
+
+  Future<PumpState> _onGetPump(PumpEvent event, Emitter emit) async {
+    try {
+      PumpModel pump = await pumpRepository.getPump(id: event.id);
+      return PumpLoadedState(
         id: pump.id,
         isActive: pump.isActive,
         isWorking: pump.isWorking,
         isAsk: pump.isAsk,
-      ));
+      );
     } catch (_) {
-      emit(PumpErrorState());
+      throw PumpErrorState();
     }
   }
 }

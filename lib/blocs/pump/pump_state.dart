@@ -35,4 +35,38 @@ class PumpLoadedState extends PumpState {
         );
 }
 
+class PumpCountdownLoadedState extends PumpLoadedState {
+  const PumpCountdownLoadedState({
+    required int id,
+    bool? isActive,
+    bool? isWorking,
+    bool? isAsk,
+    this.second,
+  }) : super(
+          id: id,
+          isActive: isActive,
+          isWorking: isWorking,
+          isAsk: isAsk,
+        );
+
+  final int? second;
+
+  @override
+  List<Object?> get props => [id, isActive, isWorking, isAsk, second];
+}
+
+class PumpManualLoadedState extends PumpLoadedState {
+  const PumpManualLoadedState({
+    required int id,
+    bool? isActive,
+    bool? isWorking,
+    bool? isAsk,
+  }) : super(
+          id: id,
+          isActive: isActive,
+          isWorking: isWorking,
+          isAsk: isAsk,
+        );
+}
+
 class PumpErrorState extends PumpState {}

@@ -8,11 +8,13 @@ class Segment extends StatefulWidget {
     required this.icons,
     this.pageController,
     this.pageSelectedIndex,
+    this.actions,
   }) : super(key: key);
 
   final List<IconData> icons;
   final PageController? pageController;
   final int? pageSelectedIndex;
+  final List<Function>? actions;
 
   @override
   State<Segment> createState() => _SegmentState();
@@ -49,6 +51,8 @@ class _SegmentState extends State<Segment> {
   changeSelectedIndex(int value) {
     setState(() {
       selectedIndex = value;
+
+      if (widget.actions != null) widget.actions![value].call();
       if (widget.pageController != null) {
         widget.pageController!.animateToPage(
           selectedIndex,
